@@ -1,4 +1,4 @@
-﻿using LifestyleChecker.Common;
+﻿using LifestyleChecker.Services;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,7 +24,7 @@ namespace LifestyleChecker.Models
                 int indexOfSeparator = this.FullName.IndexOf(_firstNameLastNameSeparator);
                 
                 if (indexOfSeparator == -1) return this.FullName;
-                return this.FullName.Substring(0, indexOfSeparator);
+                return this.FullName.Substring(0, indexOfSeparator).Trim();
             }
         }
         public string Lastname
@@ -34,7 +34,7 @@ namespace LifestyleChecker.Models
                 int indexOfSeparator = this.FullName.LastIndexOf(_firstNameLastNameSeparator);
 
                 if (indexOfSeparator == -1) return this.FullName;
-                return this.FullName.Substring(indexOfSeparator+1, this.FullName.Length-indexOfSeparator-1);
+                return this.FullName.Substring(indexOfSeparator+1, this.FullName.Length-indexOfSeparator-1).Trim();
             }
         }
     }

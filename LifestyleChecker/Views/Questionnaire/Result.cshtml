@@ -3,7 +3,8 @@
 *@
 @{
 }
-<h2>Thank you, @ViewBag.NHSNumber!</h2>
+<h2>Thank you for completing the questionnaire</h2>
+<div style="display:none">Score is @ViewBag.TotalScore</div>
 
 @if(ViewBag.TotalScore <= 3)
 {

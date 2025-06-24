@@ -51,7 +51,6 @@ namespace LifestyleChecker.Controllers
                 return View("Error");
             }
 
-
             return this.ExecuteBusinessLogic(model, response);
         }
 
