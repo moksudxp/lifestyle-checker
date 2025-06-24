@@ -1,4 +1,4 @@
-﻿namespace LifestyleChecker.Common
+﻿namespace LifestyleChecker.Services
 {
     public static class CalculatorService
     {

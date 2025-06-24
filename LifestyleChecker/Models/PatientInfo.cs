@@ -1,4 +1,4 @@
-﻿using LifestyleChecker.Common;
+﻿using LifestyleChecker.Services;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
