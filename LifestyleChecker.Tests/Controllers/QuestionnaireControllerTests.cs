@@ -15,7 +15,7 @@ namespace LifestyleChecker.Tests.Controllers
     [TestFixture]
     public class QuestionnaireControllerTests
     {
-        private const string RuleJson = @"
+        private const string _rulesJson = @"
         [
             {
                 ""questionId"": 1,
@@ -54,7 +54,7 @@ namespace LifestyleChecker.Tests.Controllers
         public void Setup()
         {
             _tempJsonPath = Path.GetTempFileName();
-            File.WriteAllText(_tempJsonPath, RuleJson);
+            File.WriteAllText(_tempJsonPath, _rulesJson);
 
             var mockEnv = new Mock<IWebHostEnvironment>();
             mockEnv.Setup(e => e.ContentRootPath).Returns(Path.GetDirectoryName(_tempJsonPath)!);
