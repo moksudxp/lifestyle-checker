@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h2>Thank you, @ViewBag.NHSNumber!</h2>
+
+@if(ViewBag.TotalScore <= 3)
+{
+    <p>Thank you for answering our questions, we don't need to see you at this time. Keep up the good work!</p>
+}
+else
+{
+    <p>We think there are some simple things you could do to improve you quality of life, please phone to book an appointment</p>
+}

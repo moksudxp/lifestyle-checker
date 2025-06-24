@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    <p>This is a questionnaire!</p>
+}
+
+@model Questionnaire
+
+<form asp-action="Submit" asp-controller="Questionnaire" method="post">
+    <input type="hidden" name="UserName" value="@Model.NHSNumber" />
+    <input type="hidden" name="Age" value="@Model.Age" />
+    @for (int i = 0; i < Model.Questions.Count; i++)
+    {
+        var question = Model.Questions[i];
+        <div>
+            <p>@question.Text</p>
+            <input type="hidden" name="Questions[@i].Id" value="@question.ID" />
+            <input type="hidden" name="Questions[@i].Text" value="@question.Text" />
+            <input type="hidden" name="Questions[@i].ScoreIfYes" value="@question.ScoreIfYes" />
+
+            <label>
+                <input type="radio" name="Answers[@question.ID]" value="true" required /> Yes
+            </label>
+            <label>
+                <input type="radio" name="Answers[@question.ID]" value="false" /> No
+            </label>
+        </div>
+    }
+    <button type="submit">Submit</button>
+</form>
