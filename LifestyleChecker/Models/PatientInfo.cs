@@ -6,7 +6,7 @@ namespace LifestyleChecker.Models
 {
     public class PatientInfo
     {
-        static private char _firstNameLastNameSeparator = ',';
+        static private readonly char _firstNameLastNameSeparator = ',';
 
         [JsonProperty("nhsNumber")]
         public string NHSNumber { get; set; } = string.Empty;
