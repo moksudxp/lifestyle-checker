@@ -69,15 +69,15 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud ,Ahmed" };
 
-            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud "));
-        }
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud"));
+        }  
 
         [Test]
         public void FirstName_ShouldReturnFirstName_WhenFullNameContainsOneCommaSeparatorAndMultipleSpaces()
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "   Moksud ,  Ahmed " };
 
-            Assert.That(patientInfo.Firstname, Is.EqualTo("   Moksud "));
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud"));
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud, Ahmed" };
 
-            Assert.That(patientInfo.Lastname, Is.EqualTo(" Ahmed"));
+            Assert.That(patientInfo.Lastname, Is.EqualTo("Ahmed"));
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "   Moksud ,  Ahmed " };
 
-            Assert.That(patientInfo.Lastname, Is.EqualTo("  Ahmed "));
+            Assert.That(patientInfo.Lastname, Is.EqualTo("Ahmed"));
         }
 
         [Test]
