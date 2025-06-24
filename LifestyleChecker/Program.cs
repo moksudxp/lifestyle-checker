@@ -1,3 +1,6 @@
+using LifestyleChecker.Common;
+using LifestyleChecker.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,7 @@ builder.Services.AddControllersWithViews().AddViewOptions(options =>
     options.HtmlHelperOptions.ClientValidationEnabled = true;
 });
 
+builder.Services.AddSingleton<IScoreCalculator, JsonScoreCalculator>();
 
 var app = builder.Build();
 

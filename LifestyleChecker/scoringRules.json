@@ -1,0 +1,29 @@
+[
+  {
+    "questionId": 1,
+    "expectedAnswer": true,
+    "ageScores": [
+      { "minAge": 0, "maxAge": 21, "score": 1 },
+      { "minAge": 22, "maxAge": 40, "score": 2 },
+      { "minAge": 41, "maxAge": 120, "score": 3 }
+    ]
+  },
+  {
+    "questionId": 2,
+    "expectedAnswer": true,
+    "ageScores": [
+      { "minAge": 0, "maxAge": 65, "score": 2 },
+      { "minAge": 66, "maxAge": 120, "score": 3 }
+    ]
+  },
+  {
+    "questionId": 3,
+    "expectedAnswer": false,
+    "ageScores": [
+      { "minAge": 0, "maxAge": 21, "score": 1 },
+      { "minAge": 22, "maxAge": 40, "score": 3 },
+      { "minAge": 41, "maxAge": 65, "score": 2 },
+      { "minAge": 66, "maxAge": 120, "score": 1 }
+    ]
+  }
+]
