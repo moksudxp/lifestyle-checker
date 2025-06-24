@@ -84,7 +84,7 @@ namespace LifestyleChecker.Controllers
         public bool ValidateClientInputAgainstAPIDetails(ClientInput clientInput, PatientInfo patientInfo)
         {
             if (clientInput.NHSNumber != patientInfo.NHSNumber) return false;
-            if (clientInput.Surname != patientInfo.Lastname) return false;
+            if (!string.Equals(clientInput.Surname, patientInfo.Lastname, StringComparison.InvariantCultureIgnoreCase)) return false;
             if (clientInput.DateOfBirth != patientInfo.DateOfBirth) return false;
 
             return true;
