@@ -1,6 +1,9 @@
 ﻿using LifestyleChecker.Controllers;
 using LifestyleChecker.Models;
+using LifestyleChecker.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +15,57 @@ namespace LifestyleChecker.Tests.Controllers
     [TestFixture]
     public class QuestionnaireControllerTests
     {
+        private const string RuleJson = @"
+        [
+            {
+                ""questionId"": 1,
+                ""expectedAnswer"": true,
+                ""ageScores"": [
+                    { ""minAge"": 0, ""maxAge"": 21, ""score"": 1 },
+                    { ""minAge"": 22, ""maxAge"": 40, ""score"": 2 },
+                    { ""minAge"": 41, ""maxAge"": 120, ""score"": 3 }
+                ]
+            },
+            {
+                ""questionId"": 2,
+                ""expectedAnswer"": true,
+                ""ageScores"": [
+                    { ""minAge"": 0, ""maxAge"": 65, ""score"": 2 },
+                    { ""minAge"": 66, ""maxAge"": 120, ""score"": 3 }
+                ]
+            },
+            {
+                ""questionId"": 3,
+                ""expectedAnswer"": false,
+                ""ageScores"": [
+                    { ""minAge"": 0, ""maxAge"": 21, ""score"": 1 },
+                    { ""minAge"": 22, ""maxAge"": 40, ""score"": 3 },
+                    { ""minAge"": 41, ""maxAge"": 65, ""score"": 2 },
+                    { ""minAge"": 66, ""maxAge"": 120, ""score"": 1 }
+                ]
+            }
+        ]";
+
         private QuestionnaireController _controller;
+        private string _tempJsonPath;
+        private JsonScoreCalculator _calculator;
 
         [SetUp]
         public void Setup()
         {
-            this._controller = new QuestionnaireController();
+            _tempJsonPath = Path.GetTempFileName();
+            File.WriteAllText(_tempJsonPath, RuleJson);
+
+            var mockEnv = new Mock<IWebHostEnvironment>();
+            mockEnv.Setup(e => e.ContentRootPath).Returns(Path.GetDirectoryName(_tempJsonPath)!);
+
+            // Rename the temp file to scoringRules.json to match expectations
+            var fullJsonPath = Path.Combine(Path.GetDirectoryName(_tempJsonPath)!, "scoringRules.json");
+            File.Move(_tempJsonPath, fullJsonPath, true);
+
+            _calculator = new JsonScoreCalculator(mockEnv.Object);
+
+            _controller = new QuestionnaireController(_calculator);
         }
 
         [TearDown]
@@ -64,230 +112,6 @@ namespace LifestyleChecker.Tests.Controllers
             questionnnaire.Answers = new Dictionary<int, bool>() { };
 
             Assert.IsFalse(this._controller.AllQuestionsAnswered(questionnnaire));
-        }
-
-        [Test]
-        public void CalculateScore_ShouldReturn0_WhenQuestionnaireIsEmpty()
-        {
-            Questionnaire questionnnaire = new Questionnaire();
-            questionnnaire.Questions = new List<Question>() { };
-            questionnnaire.Answers = new Dictionary<int, bool>() { };
-
-            Assert.That(this._controller.CalculateScore(questionnnaire), Is.EqualTo(0));
-        }
-
-        [Test]
-        public void CalculateScore_ShouldReturn0_WhenQuestionnaireContainsOnlyNullObject()
-        {
-            Questionnaire questionnnaire = new Questionnaire();
-            questionnnaire.Questions = new List<Question>() { new Question { } };
-            questionnnaire.Answers = new Dictionary<int, bool>() { };
-
-            Assert.That(this._controller.CalculateScore(questionnnaire), Is.EqualTo(0));
-        }
-
-        [Test]
-        public void CalculateScore_Q1_Yes_AgeUnder21_Returns1()
-        {
-            var model = new Questionnaire
-            {
-                Age = 20,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 1 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 1, true }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void CalculateScore_Q1_Yes_AgeBetween22And40_Returns2()
-        {
-            var model = new Questionnaire
-            {
-                Age = 35,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 1 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 1, true }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(2));
-        }
-
-        [Test]
-        public void CalculateScore_Q1_Yes_AgeBetween41And65_Returns3()
-        {
-            var model = new Questionnaire
-            {
-                Age = 60,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 1 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 1, true }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(3));
-        }
-
-        [Test]
-        public void CalculateScore_Q2_Yes_AgeUnder65_Returns2()
-        {
-            var model = new Questionnaire
-            {
-                Age = 40,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 2 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 2, true }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(2));
-        }
-
-        [Test]
-        public void CalculateScore_Q2_Yes_AgeOver65_Returns3()
-        {
-            var model = new Questionnaire
-            {
-                Age = 70,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 2 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 2, true }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(3));
-        }
-
-        [Test]
-        public void CalculateScore_Q3_No_AgeUnder21_Returns1()
-        {
-            var model = new Questionnaire
-            {
-                Age = 18,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 3 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 3, false }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void CalculateScore_Q3_No_AgeBetween22And40_Returns3()
-        {
-            var model = new Questionnaire
-            {
-                Age = 30,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 3 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 3, false }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(3));
-        }
-
-        [Test]
-        public void CalculateScore_Q3_No_AgeBetween41And65_Returns2()
-        {
-            var model = new Questionnaire
-            {
-                Age = 55,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 3 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 3, false }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(2));
-        }
-
-        [Test]
-        public void CalculateScore_Q3_No_AgeOver65_Returns1()
-        {
-            var model = new Questionnaire
-            {
-                Age = 75,
-                Questions = new List<Question>
-                {
-                    new Question { ID = 3 }
-                },
-                Answers = new Dictionary<int, bool>
-                {
-                    { 3, false }
-                }
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void CalculateScore_NoAnswersOrQuestions_Returns0()
-        {
-            var model = new Questionnaire
-            {
-                Age = 50,
-                Questions = new List<Question>(),
-                Answers = new Dictionary<int, bool>()
-            };
-
-            var result = _controller.CalculateScore(model);
-
-            Assert.That(result, Is.EqualTo(0));
         }
 
         [Test]
