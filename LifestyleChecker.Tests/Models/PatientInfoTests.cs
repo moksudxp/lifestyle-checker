@@ -17,7 +17,7 @@ namespace LifestyleChecker.Tests.Models
 
             int age = DateTime.Today.Year - 1850;
 
-            Assert.AreEqual(age, patientInfo.Age);
+            Assert.That(patientInfo.Age, Is.EqualTo(age));
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace LifestyleChecker.Tests.Models
 
             int age = DateTime.Today.Year - 1995;
 
-            Assert.AreEqual(age, patientInfo.Age);
+            Assert.That(patientInfo.Age, Is.EqualTo(age));
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace LifestyleChecker.Tests.Models
 
             int age = DateTime.Today.Year - 2020;
 
-            Assert.AreEqual(age, patientInfo.Age);
+            Assert.That(patientInfo.Age, Is.EqualTo(age));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud,Ahmed" };
 
-            Assert.AreEqual("Moksud", patientInfo.Firstname);
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud"));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud Junior,Ahmed" };
 
-            Assert.AreEqual("Moksud Junior", patientInfo.Firstname);
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud Junior"));
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud, Ahmed" };
 
-            Assert.AreEqual("Moksud", patientInfo.Firstname);
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud"));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud ,Ahmed" };
 
-            Assert.AreEqual("Moksud ", patientInfo.Firstname);
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud "));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "   Moksud ,  Ahmed " };
 
-            Assert.AreEqual("   Moksud ", patientInfo.Firstname);
+            Assert.That(patientInfo.Firstname, Is.EqualTo("   Moksud "));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud,Ahmed,Brian" };
 
-            Assert.AreEqual("Moksud", patientInfo.Firstname);
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud"));
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud" };
 
-            Assert.AreEqual("Moksud", patientInfo.Firstname);
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud"));
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud - Ahmed" };
 
-            Assert.AreEqual("Moksud - Ahmed", patientInfo.Firstname);
+            Assert.That(patientInfo.Firstname, Is.EqualTo("Moksud - Ahmed"));
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud,Ahmed" };
 
-            Assert.AreEqual("Ahmed", patientInfo.Lastname);
+            Assert.That(patientInfo.Lastname, Is.EqualTo("Ahmed"));
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud Junior,Ahmed" };
 
-            Assert.AreEqual("Ahmed", patientInfo.Lastname);
+            Assert.That(patientInfo.Lastname, Is.EqualTo("Ahmed"));
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud, Ahmed" };
 
-            Assert.AreEqual(" Ahmed", patientInfo.Lastname);
+            Assert.That(patientInfo.Lastname, Is.EqualTo(" Ahmed"));
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud ,Ahmed" };
 
-            Assert.AreEqual("Ahmed", patientInfo.Lastname);
+            Assert.That(patientInfo.Lastname, Is.EqualTo("Ahmed"));
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "   Moksud ,  Ahmed " };
 
-            Assert.AreEqual("  Ahmed ", patientInfo.Lastname);
+            Assert.That(patientInfo.Lastname, Is.EqualTo("  Ahmed "));
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud,Ahmed,Brian" };
 
-            Assert.AreEqual("Brian", patientInfo.Lastname);
+            Assert.That(patientInfo.Lastname, Is.EqualTo("Brian"));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud" };
 
-            Assert.AreEqual("Moksud", patientInfo.Lastname);
+            Assert.That(patientInfo.Lastname, Is.EqualTo("Moksud"));
         }
 
         [Test]
@@ -165,7 +165,7 @@ namespace LifestyleChecker.Tests.Models
         {
             PatientInfo patientInfo = new PatientInfo { FullName = "Moksud - Ahmed" };
 
-            Assert.AreEqual("Moksud - Ahmed", patientInfo.Lastname);
+            Assert.That(patientInfo.Lastname, Is.EqualTo("Moksud - Ahmed"));
         }
     }
 }

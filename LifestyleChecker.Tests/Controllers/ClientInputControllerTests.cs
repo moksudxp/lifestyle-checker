@@ -25,8 +25,8 @@ namespace LifestyleChecker.Tests.Controllers
             string errorMessage = ((ErrorViewModel)viewResult.Model).ErrorMessage;
             string detailedErrorMessage = ((ErrorViewModel)viewResult.Model).DetailedErrorDescription;
 
-            Assert.AreEqual("Your details could not be found", errorMessage);
-            Assert.AreEqual("API cannot find Key", detailedErrorMessage);
+            Assert.That(errorMessage, Is.EqualTo("Your details could not be found"));
+            Assert.That(detailedErrorMessage, Is.EqualTo("API cannot find Key"));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace LifestyleChecker.Tests.Controllers
             ActionResult returnResult = controller.ExecuteBusinessLogic(clientInput, response);
             var viewResult = (Microsoft.AspNetCore.Mvc.ViewResult)returnResult;
 
-            Assert.AreEqual(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.BadRequest));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace LifestyleChecker.Tests.Controllers
             ActionResult returnResult = controller.ExecuteBusinessLogic(clientInput, response);
             var viewResult = (Microsoft.AspNetCore.Mvc.ViewResult)returnResult;
 
-            Assert.AreEqual("Error", viewResult.ViewName);
+            Assert.That(viewResult.ViewName, Is.EqualTo("Error"));
         }
 
         [Test]
@@ -70,8 +70,8 @@ namespace LifestyleChecker.Tests.Controllers
             string errorMessage = ((ErrorViewModel)viewResult.Model).ErrorMessage;
             string detailedErrorMessage = ((ErrorViewModel)viewResult.Model).DetailedErrorDescription;
 
-            Assert.AreEqual("Your details could not be found", errorMessage);
-            Assert.AreEqual("Data don't match between user input and API", detailedErrorMessage);
+            Assert.That(errorMessage, Is.EqualTo("Your details could not be found"));
+            Assert.That(detailedErrorMessage, Is.EqualTo("Data don't match between user input and API"));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace LifestyleChecker.Tests.Controllers
             ActionResult returnResult = controller.ExecuteBusinessLogic(clientInput, response);
             var viewResult = (Microsoft.AspNetCore.Mvc.ViewResult)returnResult;
 
-            Assert.AreEqual("Error", viewResult.ViewName);
+            Assert.That(viewResult.ViewName, Is.EqualTo("Error"));
         }
 
         [Test]

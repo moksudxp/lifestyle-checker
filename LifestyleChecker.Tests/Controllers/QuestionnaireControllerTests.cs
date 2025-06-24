@@ -73,7 +73,7 @@ namespace LifestyleChecker.Tests.Controllers
             questionnnaire.Questions = new List<Question>() { };
             questionnnaire.Answers = new Dictionary<int, bool>() { };
 
-            Assert.AreEqual(0, this._controller.CalculateScore(questionnnaire));
+            Assert.That(this._controller.CalculateScore(questionnnaire), Is.EqualTo(0));
         }
 
         [Test]
@@ -83,18 +83,8 @@ namespace LifestyleChecker.Tests.Controllers
             questionnnaire.Questions = new List<Question>() { new Question { } };
             questionnnaire.Answers = new Dictionary<int, bool>() { };
 
-            Assert.AreEqual(0, this._controller.CalculateScore(questionnnaire));
+            Assert.That(this._controller.CalculateScore(questionnnaire), Is.EqualTo(0));
         }
-
-        //[Test]
-        //public void CalculateScore_ShouldReturn0_WhenAgeGroupIs16to21_AndQuestionOneIsYes()
-        //{
-        //    Questionnaire questionnnaire = new Questionnaire();
-        //    questionnnaire.Questions = new List<Question>() { new Question { } };
-        //    questionnnaire.Answers = new Dictionary<int, bool>() { };
-
-        //    Assert.AreEqual(0, this._controller.CalculateScore(questionnnaire));
-        //}
 
         [Test]
         public void CalculateScore_Q1_Yes_AgeUnder21_Returns1()
