@@ -21,20 +21,20 @@ namespace LifestyleChecker.Models
         {
             get
             {
-                int indexOfSeparator = this.FullName.IndexOf(_firstNameLastNameSeparator);
-                
+                int indexOfSeparator = this.FullName.LastIndexOf(_firstNameLastNameSeparator);
+
                 if (indexOfSeparator == -1) return this.FullName;
-                return this.FullName.Substring(0, indexOfSeparator).Trim();
+                return this.FullName.Substring(indexOfSeparator + 1, this.FullName.Length - indexOfSeparator - 1).Trim();              
             }
         }
         public string Lastname
         {
             get
             {
-                int indexOfSeparator = this.FullName.LastIndexOf(_firstNameLastNameSeparator);
+                int indexOfSeparator = this.FullName.IndexOf(_firstNameLastNameSeparator);
 
                 if (indexOfSeparator == -1) return this.FullName;
-                return this.FullName.Substring(indexOfSeparator+1, this.FullName.Length-indexOfSeparator-1).Trim();
+                return this.FullName.Substring(0, indexOfSeparator).Trim();
             }
         }
     }
